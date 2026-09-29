@@ -1,0 +1,19 @@
+FILE INSTRUCTION — ABS 2021 ILOC extract not supplied
+
+From the ABS 2021 Census DataPacks page:
+https://www.abs.gov.au/census/find-census-data/datapacks
+
+Download the Northern Territory Indigenous Location (ILOC) geography DataPack
+for a population table that supports ILOC geography (for example, the G01
+General Community Profile — Selected Characteristics). Choose the CSV or Excel
+format offered by ABS and retain the official ILOC code, ILOC name, table
+population field, product title, year and licence terms.
+
+Populate abs_2021_iloc_optional.csv with the actual value, ILOC code/name, a
+community key and a documented match_method based on an explicit, reviewed
+geography crosswalk. Do not infer a match from approximate name similarity.
+The filename above is this project's normalized input template, not an ABS
+download filename.
+
+ABS data are not included until a valid ILOC source extract and reviewed
+crosswalk are supplied.

@@ -1,0 +1,18 @@
+FILE INSTRUCTION — ADII extract not supplied
+
+Download/export real statistics from:
+https://dashboard.digitalinclusionindex.org.au/FirstNations/Remote/
+
+Use only the published geography shown on the dashboard. Preserve its geography
+name/level, reporting year, Access, Affordability, Digital Ability, ADII score
+and source citation. Save source rows to digital_inclusion_optional.csv using
+the existing header template.
+
+Do not distribute regional, NT-wide or national values onto individual
+communities. Only a uniquely matched source row explicitly published at
+community level can be joined to a community profile. The dashboard currently
+contains no fabricated replacement values in this project.
+
+Verify the current ADII licence/citation before redistribution. The source
+dashboard currently states CC BY-NC-SA 4.0 terms and requests the 2025 ADII
+citation.
