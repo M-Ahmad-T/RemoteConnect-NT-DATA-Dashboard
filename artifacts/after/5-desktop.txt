@@ -1,0 +1,78 @@
+REMOTECONNECT NT / 05
+Data insights
+
+Three ways to read the evidence: source flags, infrastructure distance and scoring assumptions.
+
+All three comparisons use the same 188 filtered source records, out of 188. Weights change the indicator, not the source observations.
+
+01 / Coverage descriptions overlap
+0%
+20%
+40%
+60%
+80%
+100%
+Share of filtered source records (%)
+
+Macro cell: 56 · Small cell: 29 · Proximity to cell: 96 · Multiple flags: 7
+
+7 records have multiple YES flags. They are grouped once in this composition; every original flag remains in profiles and exports. These categories describe the 2022 source, not current quality.
+
+02 / Nearby infrastructure differs by operator
+
+Compare up to six locations
+
+Ngayawilli
+Dhudupu
+Galiwinku
+Dhambala
+Galawarra
+0
+100
+200
+300
+400
+500
+Ngayawilli
+Dhudupu
+Galiwinku
+Dhambala
+Galawarra
+Telstra
+Optus
+TPG
+Distance (km)
+
+Across these 5 locations, median distance to the nearest listed NT site is 59.3 km. Initial selection: the five greatest nearest-site distances in this view.
+
+TPG distances exclude access through the separate Optus–TPG shared network. Provider proximity is not a count of retail services available locally.
+
+03 / Does changing the weights change the result?
+0
+20
+40
+60
+80
+100
+0
+20
+40
+60
+80
+100
+Default weights · indicator /100
+Current weights · indicator /100
+
+0 of 188 scored records change; largest absolute change: 0.0 points. Dots on the dashed line are unchanged. Use ‘Adjust the indicator’ in the sidebar.
+
+Both scores use these same records. Priority-band filters use the current score. This compares assumptions, not change over time.
+
+keyboard_arrow_right
+
+Full NT infrastructure context — unaffected by location filters
+
+Save the filtered evidence →
+
+keyboard_arrow_right
+
+Sources, dates and limits

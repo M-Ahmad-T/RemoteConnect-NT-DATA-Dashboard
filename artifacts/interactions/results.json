@@ -1,0 +1,11 @@
+[
+  "Overview featured action opens Ngayawilli",
+  "Coverage filter preserves multiple flags and Explorer honours filtered selection",
+  "Three actual downloads saved and parsed; selection and 7-row filter persist across navigation",
+  "Map overlay renders full NT operator records alongside filtered circles",
+  "Coverage slider changes effective weights and sensitivity; missing context control disabled",
+  "Empty filtered Explorer and Downloads do not fall back to unfiltered records",
+  "ADII missing-data state remains explicit",
+  "No external network requests during app navigation and map interactions",
+  "390px touch layout: sidebar navigation and location selection work without page overflow"
+]

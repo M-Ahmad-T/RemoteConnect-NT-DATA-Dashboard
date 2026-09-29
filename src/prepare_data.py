@@ -22,6 +22,13 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 PROCESSED = ROOT / "data" / "processed"
 PROVIDERS = ("Telstra", "Optus", "TPG")
+COVERAGE_FLAGS = {"macro_cell": "Macro cell", "small_cell": "Small cell", "proximity_to_cell": "Proximity to cell"}
+
+
+def coverage_flags(row: pd.Series) -> list[str]:
+    """Keep every positive source flag; flags are not mutually exclusive."""
+    return [label for field, label in COVERAGE_FLAGS.items()
+            if str(row.get(field, "")).strip().casefold() in {"yes", "y", "true", "1"}]
 def clean_column_name(value: object) -> str:
     text = unicodedata.normalize("NFKD", str(value))
     return re.sub(r"[^a-z0-9]+", "_", text.encode("ascii", "ignore").decode().lower()).strip("_")
@@ -62,8 +69,9 @@ def find_core_workbook() -> Path:
 
 
 def read_core_coverage(path: Path) -> pd.DataFrame:
-    workbook = pd.ExcelFile(path)
-    for sheet in workbook.sheet_names:
+    with pd.ExcelFile(path) as workbook:
+        sheets = workbook.sheet_names
+    for sheet in sheets:
         for header_row in range(11):
             candidate = normalise_columns(
                 pd.read_excel(path, sheet_name=sheet, header=header_row)
@@ -90,15 +98,7 @@ def valid_coordinates(frame: pd.DataFrame) -> pd.Series:
 
 
 def coverage_category(row: pd.Series) -> str:
-    for field, label in (
-        ("macro_cell", "Macro cell"),
-        ("small_cell", "Small cell"),
-        ("proximity_to_cell", "Proximity to cell"),
-    ):
-        value = str(row.get(field, "")).strip().casefold()
-        if value in {"yes", "y", "true", "1"}:
-            return label
-    return "Not specified"
+    return " + ".join(coverage_flags(row)) or "Not specified"
 
 
 def load_communities(path: Path) -> pd.DataFrame:
@@ -115,6 +115,11 @@ def load_communities(path: Path) -> pd.DataFrame:
     out["latitude"] = pd.to_numeric(raw["latitude"], errors="coerce")
     out["longitude"] = pd.to_numeric(raw["longitude"], errors="coerce")
     out["coverage_type"] = raw.apply(coverage_category, axis=1)
+    for field in COVERAGE_FLAGS:
+        out[field] = raw.get(field, pd.Series(pd.NA, index=raw.index))
+    out["coverage_flag_count"] = raw.apply(lambda row: len(coverage_flags(row)), axis=1)
+    # Explicit scoring rule: use the least limiting listed type, preserving all flags.
+    out["coverage_score_basis"] = raw.apply(lambda row: next(iter(coverage_flags(row)), "Not specified"), axis=1)
     out["coverage_provider"] = raw.get(
         "provider", pd.Series("Not specified", index=raw.index)
     ).fillna("Not specified").astype(str).str.strip()
@@ -226,6 +231,13 @@ def haversine_distances_km(lat: float, lon: float, sites: pd.DataFrame) -> np.nd
     return earth_radius_km * 2 * np.arcsin(np.sqrt(np.clip(a, 0, 1)))
 
 
+def mapped_site_keys(sites: pd.DataFrame) -> pd.Series:
+    """A reproducible deduplication key, not a verified count of physical towers."""
+    return (sites["rfnsa_id"].fillna("").astype(str) + "|"
+            + sites["latitude"].round(5).astype(str) + "|"
+            + sites["longitude"].round(5).astype(str))
+
+
 def match_infrastructure(
     communities: pd.DataFrame,
     sites: pd.DataFrame,
@@ -275,13 +287,7 @@ def match_infrastructure(
                     within_50 = distances <= 50
                     within_100 = distances <= 100
                     # A physical site can have more than one MNO record; count unique mapped site locations.
-                    site_keys = (
-                        sites["rfnsa_id"].fillna("").astype(str)
-                        + "|"
-                        + sites["latitude"].round(5).astype(str)
-                        + "|"
-                        + sites["longitude"].round(5).astype(str)
-                    )
+                    site_keys = mapped_site_keys(sites)
                     record["sites_within_25km"] = int(site_keys[within_25].nunique())
                     record["sites_within_50km"] = int(site_keys[within_50].nunique())
                     record["sites_within_100km"] = int(site_keys[within_100].nunique())
@@ -317,6 +323,9 @@ def load_optional_context(communities: pd.DataFrame) -> pd.DataFrame:
                 ].copy()
                 community_rows["community_key"] = community_rows["geography_name"].map(community_key)
                 community_rows = community_rows.drop_duplicates("community_key", keep=False)
+                # A repeated target name at different coordinates is not a defensible match.
+                ambiguous = result.loc[result.duplicated("community_key", keep=False), "community_key"]
+                community_rows = community_rows.loc[~community_rows["community_key"].isin(ambiguous)]
                 numeric_names = {
                     "adii_score": "digital_inclusion_score",
                     "access": "access_score",
@@ -408,7 +417,7 @@ def add_priority_components(frame: pd.DataFrame) -> pd.DataFrame:
         "Macro cell": 20.0,
         "Not specified": np.nan,
     }
-    out["coverage_limitation_component"] = out["coverage_type"].map(coverage_map)
+    out["coverage_limitation_component"] = out.get("coverage_score_basis", out["coverage_type"]).map(coverage_map)
     out["distance_component"] = (out["nearest_mobile_site_km"].clip(lower=0, upper=100) / 100) * 100
     out["provider_diversity_component"] = (
         (1 - out["infrastructure_diversity"].clip(lower=0, upper=3) / 3) * 100
@@ -454,9 +463,10 @@ def main() -> int:
         "community_records": int(len(prepared)),
         "communities_with_coordinates": int(prepared[["latitude", "longitude"]].notna().all(axis=1).sum()),
         "infrastructure_operator_records_in_nt": int(len(sites)),
-        "physical_site_locations_in_nt": int(
-            sites[["rfnsa_id", "latitude", "longitude"]].drop_duplicates().shape[0]
-        ) if not sites.empty else 0,
+        "distinct_mapped_site_keys_in_nt": int(mapped_site_keys(sites).nunique()) if not sites.empty else 0,
+        "accc_observation_date": "2026-01-31",
+        "source_access_date": "2026-09-28",
+        "multiple_coverage_flag_records": int(prepared["coverage_flag_count"].gt(1).sum()),
         "priority_scored_communities": int(prepared["priority_score"].notna().sum()),
         "communities_with_5g_within_50km": int(prepared["has_5g_nearby"].eq(True).sum()),
         "digital_inclusion_records_matched": int(

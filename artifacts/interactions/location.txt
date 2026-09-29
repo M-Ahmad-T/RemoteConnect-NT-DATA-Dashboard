@@ -1,0 +1,32 @@
+RemoteConnect NT | location snapshot
+Generated (Darwin): 2026-09-30T06:59:11+09:30
+
+Location: MOUNT EBENEZER
+Latitude: -25.17300
+Longitude: 132.67400
+All NT source coverage flags (2022): Small cell + Proximity to cell
+Derived score basis: Small cell
+Population (NT source field; reference year unspecified): Not assessed
+Nearest NT-listed site (km): 11.61
+Nearest Telstra site (km): 11.61
+Nearest Optus site (km): 53.08
+Nearest TPG own-network site (km): 1405.69
+Distinct mapped site keys within 50 km (RFNSA + rounded coordinates): 1
+Telstra operator-site records within 50 km: 1
+Optus operator-site records within 50 km: 0
+TPG operator-site records within 50 km: 0
+LTE band listed at a site within 50 km: True
+NR band listed at a site within 50 km: False
+Experimental indicator (0-100): 33.60
+Effective weights and inputs: Included: coverage limitation: 35/100 (50.00% of available weight); distance to infrastructure: 12/100 (31.25% of available weight); provider diversity: 67/100 (18.75% of available weight). Not included: digital inclusion / remoteness context.
+
+Verify next: check current provider maps, device/band compatibility and local service with permission.
+The 2022 source lists covered locations, not confirmed black spots. No community consultation is claimed.
+Distances use NT-filtered sites only; cross-border sites and TPG MOCN access are not included.
+Nearby sites and listed bands do not prove current service, reliability or affordability.
+
+NT Government (2022; CC BY): https://data.nt.gov.au/dataset/mobile-phone-coverage-in-remote-areas-of-the-nt
+ACCC (31 January 2026 observations; CC BY 2.5 AU): https://data.gov.au/data/dataset/4b472a18-d0fa-409c-994a-ab17162bcb90
+Natural Earth boundary: public domain; https://www.naturalearthdata.com/about/terms-of-use/
+Source files accessed 2026-09-28; publisher metadata checked 2026-09-29.
+Source files: nt-mobile-coverage-2022.xlsx; mobile-sites-telstra-2026.csv, mobile-sites-optus-2026.csv, mobile-sites-tpg-2026.csv

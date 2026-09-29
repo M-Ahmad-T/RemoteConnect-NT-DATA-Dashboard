@@ -1,0 +1,56 @@
+RemoteConnect NT
+
+Understanding connectivity gaps across remote Northern Territory communities.
+
+Community / location records
+
+188
+
+Distinct mapped site locations
+
+408
+
+Proximity coverage records
+
+96
+
+Higher priority indicator
+
+16
+
+No nearby 5G band listed
+
+67
+
+188 assessed
+
+KPIs summarize the complete prepared dataset; sidebar filters change the map and filtered views.
+
+How to read these figures. The NT Government list records remote locations with mobile coverage and distinguishes macro-cell, small-cell and proximity coverage; it is not a complete list of uncovered communities. “Proximity coverage” is shown as a source category, not as a measured quality-of-service rating. “No nearby 5G band listed” refers only to ACCC operator-site band records within 50 km and is not a service-availability claim. ACCC 2026 operator sites are matched using straight-line distance.
+Community connectivity overview
+
+Map pins show NT source locations, coloured by the experimental, adjustable priority indicator.
+
+Show ACCC mobile-site markers
+
+Community priority / infrastructure
+Northern Territory boundary
+Lower priority
+Moderate priority
+Higher priority
+
+The NT boundary and data points are drawn from local source files; no external map tiles are used.
+
+keyboard_arrow_right
+
+Data coverage and source files
+
+Ethics & limitations
+Connectivity records can be outdated; NT coverage is from 2022 and ACCC site records are a 2026 release.
+Tower proximity does not guarantee signal, capacity, reliability, indoor service or local service quality.
+Coverage is not affordability. Digital inclusion also involves Access, Affordability and Digital Ability.
+Aggregate statistics cannot describe every individual; never infer a person's digital ability.
+Use respectful, strengths-based language; do not label First Nations communities “digitally illiterate”.
+Community consultation should precede infrastructure decisions.
+The experimental priority indicator is decision support, not an official ranking or investment decision.
+Missing data is shown as unavailable rather than estimated without evidence.

@@ -1,0 +1,86 @@
+[
+  {
+    "page": "dashboard\n\nOverview",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "map\n\nConnectivity map",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "location_city\n\nCommunity explorer",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "diversity_3\n\nDigital inclusion",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "analytics\n\nData insights",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "download\n\nOffline mode",
+    "viewport": "desktop",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "dashboard\n\nOverview",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "map\n\nConnectivity map",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "location_city\n\nCommunity explorer",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "diversity_3\n\nDigital inclusion",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "analytics\n\nData insights",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "download\n\nOffline mode",
+    "viewport": "mobile",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  }
+]

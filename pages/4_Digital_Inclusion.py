@@ -1,93 +1,37 @@
-from pathlib import Path
-
 import pandas as pd
-import plotly.express as px
 import streamlit as st
 
-from src.dashboard import ROOT, setup_page
+from src.dashboard import ROOT, next_page, setup_page, source_footer
 
-setup_page(
-    "Digital inclusion",
-    "Connectivity is one part of inclusion—not a proxy for affordability, access or ability.",
-)
+_, _, view, summary, _ = setup_page("Digital inclusion", "A nearby mobile site cannot tell us whether people can afford or use a service.")
+path = ROOT / "data/raw/digital_inclusion_optional.csv"
+source = pd.read_csv(path) if path.exists() else pd.DataFrame()
+st.subheader("What this dataset cannot answer")
+for title, question in [("Access", "Are suitable devices and reliable connections within reach?"),
+                        ("Affordability", "Can people meet their needs without giving up other essentials?"),
+                        ("Digital ability", "Do people have the skills and support to do what matters to them online?")]:
+    with st.container(border=True):
+        st.markdown(f"**{title}**")
+        st.write(question)
 
-st.markdown(
-    """
-    The Australian Digital Inclusion Index (ADII) describes **Access, Affordability and Digital Ability**.
-    Use each statistic only at the geography published by the source. An NT-wide, regional or other
-    aggregate value must not be copied onto a community profile or interpreted as an individual's ability.
-    """
-)
-source_path = ROOT / "data" / "raw" / "digital_inclusion_optional.csv"
-source = pd.read_csv(source_path) if source_path.exists() else None
-if source is None:
-    st.warning("Optional ADII source file is missing. See data/raw/ADII_FILE_INSTRUCTION.txt.")
-elif source.empty:
-    st.info(
-        "No ADII statistics have been supplied with this workspace. The dashboard does not estimate or "
-        "fabricate values. Add sourced rows to data/raw/digital_inclusion_optional.csv and preserve the "
-        "source geography and citation."
-    )
+if source.empty:
+    st.markdown('<div class="note"><b>No matched digital inclusion observations.</b><br>The ADII file contains no observations in this version. '
+                'The indicator uses coverage, distance and provider records only; its context control is disabled.</div>', unsafe_allow_html=True)
+    st.subheader("Why we leave a gap here")
+    st.write("An average for a region describes the people surveyed in that region. It is not a result for every location inside it. "
+             "We need an observation published for the same community, with its year and citation, before attaching it to a profile.")
 else:
-    required = {"geography_level", "geography_name"}
-    if not required.issubset(source.columns):
-        st.error("The ADII file must include geography_level and geography_name columns.")
-    else:
-        source["geography_level"] = source["geography_level"].astype(str)
-        st.subheader("Supplied source records by published geography")
-        levels = sorted(source["geography_level"].dropna().unique())
-        for level in levels:
-            rows = source.loc[source["geography_level"].eq(level)]
-            st.markdown(f"**{level}** — {len(rows)} source record(s)")
-            st.dataframe(rows, width="stretch", hide_index=True)
+    st.subheader("Supplied observations at their published geography")
+    st.caption("This table shows the full context source, independent of location filters. Regional and national values are never assigned to profiles.")
+    st.dataframe(source, hide_index=True, width="stretch")
+    st.caption(f"Matched community observations in the prepared data: {summary.get('digital_inclusion_records_matched', 0)}.")
 
-        metrics = [
-            column
-            for column in ("adii_score", "access", "affordability", "digital_ability")
-            if column in source.columns
-        ]
-        if metrics:
-            chart_data = source.melt(
-                id_vars=["geography_level", "geography_name"],
-                value_vars=metrics,
-                var_name="Dimension",
-                value_name="Source value",
-            )
-            chart_data["Source value"] = pd.to_numeric(chart_data["Source value"], errors="coerce")
-            chart_data = chart_data.dropna(subset=["Source value"])
-            if not chart_data.empty:
-                chart_data["Geography"] = (
-                    chart_data["geography_name"].astype(str)
-                    + " · "
-                    + chart_data["geography_level"].astype(str)
-                )
-                st.plotly_chart(
-                    px.bar(
-                        chart_data,
-                        x="Geography",
-                        y="Source value",
-                        color="Dimension",
-                        barmode="group",
-                        hover_data=["geography_level", "geography_name"],
-                    ),
-                    width="stretch",
-                )
-        st.caption(
-            "Values and geography labels are shown as supplied; no regional or national value is "
-            "downscaled to individual communities."
-        )
-st.code("data/raw/ADII_FILE_INSTRUCTION.txt", language=None)
-st.caption("ABS 2021 NT Indigenous Location (ILOC) population data are also not supplied; see data/raw/ABS_2021_ILOC_FILE_INSTRUCTION.txt.")
-
-st.subheader("Geography and interpretation")
-st.markdown(
-    """
-    - **Community-level:** only a source record explicitly published at that community geography may be linked to a community profile.
-    - **Regional:** retain the named region and show it separately; do not distribute the value across communities within it.
-    - **NT-level:** describe it as an NT-level statistic.
-    - **National:** describe it as a national statistic.
-
-    Source: [Australian Digital Inclusion Index — First Nations, remote communities](https://dashboard.digitalinclusionindex.org.au/FirstNations/Remote/).
-    The dashboard states CC BY-NC-SA 4.0 terms for its report/data and requests the 2025 ADII citation; verify the current source terms and citation when exporting data.
-    """
-)
+st.link_button("Open the ADII remote communities dashboard", "https://dashboard.digitalinclusionindex.org.au/FirstNations/Remote/")
+st.caption("The source offers 2022 and 2024 observations and requests the 2025 ADII report citation. No numerical ADII results are reproduced here.")
+with st.expander("ADII attribution"):
+    st.write("Thomas, J., McCosker, A., Parkinson, S., Hegarty, K., Featherstone, D., Kennedy, J., Ormond-Parker, L., Morrison, K., Rea, H., & Ganley, L. "
+             "Measuring Australia’s Digital Divide: 2025 Australian Digital Inclusion Index. Melbourne: ARC Centre of Excellence for Automated Decision-Making and Society, "
+             "RMIT University, Swinburne University of Technology, and Telstra.")
+    st.caption("Dashboard text/data: CC BY-NC-SA 4.0; accessed 29 September 2026. Opinions in this prototype are its authors’ own. ABS Census context is also not joined.")
+next_page("5_Data_Insights.py", "Explore what the available records do show →")
+source_footer()

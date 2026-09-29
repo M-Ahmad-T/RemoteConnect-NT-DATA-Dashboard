@@ -1,0 +1,17 @@
+Connectivity map
+
+Explore source locations and nearby ACCC mobile infrastructure.
+
+Use the sidebar filters for provider, NT coverage type, priority band, nearby 4G/5G and remoteness. A missing tower match is shown as unavailable, not estimated.
+
+Show ACCC mobile-site markers
+
+Community priority / infrastructure
+Northern Territory boundary
+Lower priority
+Moderate priority
+Higher priority
+
+The NT boundary and data points are drawn from local source files; no external map tiles are used.
+
+Filtered community records

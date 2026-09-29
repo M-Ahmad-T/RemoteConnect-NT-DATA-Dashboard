@@ -1,0 +1,66 @@
+REMOTECONNECT NT / 03
+Community explorer
+
+Read one location’s evidence, then decide what needs checking.
+
+Choose a source location
+
+Adelaide River
+
+VILLAGE · NT source coordinates -13.2378, 131.1047 · all figures below refer to this selected record
+
+16.5 /100
+Experimental indicator
+Lower
+0.9 km
+Nearest NT site
+straight-line distance
+15
+Mapped site keys
+within 50 km
+
+2022 source flags: Macro cell. Score basis: Macro cell (least limiting listed type).
+
+Population in the NT source: 317. This is the workbook value, not a current estimate.
+
+How far is each operator’s infrastructure?
+0
+10
+20
+30
+40
+50
+60
+70
+Adelaide River
+Telstra
+Optus
+TPG
+Distance (km)
+
+Distances use NT-listed sites only. TPG means its own listed network; shared access through Optus is excluded. Distance is not a service test.
+
+keyboard_arrow_down
+
+Listed bands and nearby site records
+
+LTE = 4G; NR = 5G. These are bands listed at sites, not bands confirmed at this location. Multiple operators can share a mapped site key.
+
+What makes up the indicator?
+
+Effective shares: coverage limitation 50.00% · distance to infrastructure 31.25% · provider diversity 18.75% · digital inclusion 0.00%
+
+Missing inputs contribute no invented value. Remaining positive weights sum to 100%. Coverage proxy values and the 50 km radius are design assumptions.
+
+No usable ADII/remoteness observation contributes to this location’s score.
+
+What to verify next
+Check the current provider coverage map for this exact location and device.
+With permission, ask local users about indoor service, busy periods, outages and cost. No consultation has yet been undertaken for this prototype.
+Record the date and conditions of any service test before proposing infrastructure changes.
+
+Save this location’s evidence for later →
+
+keyboard_arrow_right
+
+Sources, dates and limits

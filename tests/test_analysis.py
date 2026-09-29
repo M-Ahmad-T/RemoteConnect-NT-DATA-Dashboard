@@ -5,7 +5,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from src.prepare_data import haversine_distances_km, load_communities, match_infrastructure
+from src.prepare_data import haversine_distances_km, load_communities, match_infrastructure, coverage_category, add_priority_components
 from src.priority import DEFAULT_WEIGHTS, apply_priority_weights
 
 
@@ -61,6 +61,22 @@ class HaversineTests(unittest.TestCase):
 
 
 class CommunityCleaningTests(unittest.TestCase):
+    def test_multiple_flags_are_preserved_for_seven_source_locations(self):
+        data = load_communities(Path(__file__).resolve().parents[1] / "data/raw/nt-mobile-coverage-2022.xlsx")
+        expected = {"BARROW CREEK": "Macro cell + Small cell", "DALY WATERS": "Macro cell + Small cell",
+                    "ELLIOTT": "Macro cell + Small cell", "ERLDUNDA": "Macro cell + Small cell",
+                    "MATARANKA": "Macro cell + Small cell", "MOUNT EBENEZER": "Small cell + Proximity to cell",
+                    "MUTITJULU": "Macro cell + Proximity to cell"}
+        for name, flags in expected.items():
+            row = data.loc[data.community.eq(name)].iloc[0]
+            self.assertEqual(row.coverage_type, flags)
+            self.assertEqual(row.coverage_flag_count, 2)
+            self.assertEqual(row.coverage_score_basis, flags.split(" + ")[0])
+        self.assertEqual(int(data.coverage_flag_count.gt(1).sum()), 7)
+
+    def test_no_yes_flags_stays_unspecified(self):
+        self.assertEqual(coverage_category(pd.Series({"macro_cell": "NO", "small_cell": np.nan})), "Not specified")
+
     def test_duplicate_rows_are_removed_and_missing_coordinates_are_not_invented(self):
         raw = pd.DataFrame(
             {
@@ -86,6 +102,21 @@ class CommunityCleaningTests(unittest.TestCase):
 
 
 class PriorityTests(unittest.TestCase):
+    def test_default_effective_weights_without_context_and_no_effect_from_missing_slider(self):
+        frame = pd.DataFrame({"coverage_limitation_component": [100.0], "distance_component": [40.0],
+                              "provider_diversity_component": [50.0], "context_component": [np.nan]})
+        scored = apply_priority_weights(frame, DEFAULT_WEIGHTS)
+        self.assertEqual(scored.loc[0, "coverage_limitation_component_weight_pct"], 50)
+        self.assertEqual(scored.loc[0, "distance_component_weight_pct"], 31.25)
+        self.assertEqual(scored.loc[0, "provider_diversity_component_weight_pct"], 18.75)
+        changed = apply_priority_weights(frame, {**DEFAULT_WEIGHTS, "digital inclusion / remoteness context": 100})
+        self.assertEqual(scored.loc[0, "priority_score"], changed.loc[0, "priority_score"])
+
+    def test_infinite_component_is_omitted(self):
+        frame = pd.DataFrame({"coverage_limitation_component": [100.0], "distance_component": [np.inf],
+                              "provider_diversity_component": [np.nan], "context_component": [np.nan]})
+        self.assertEqual(apply_priority_weights(frame, DEFAULT_WEIGHTS).loc[0, "priority_score"], 100)
+
     def test_missing_components_are_excluded_and_remaining_weights_rescaled(self):
         frame = pd.DataFrame(
             {

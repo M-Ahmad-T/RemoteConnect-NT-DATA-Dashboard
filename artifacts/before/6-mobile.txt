@@ -1,0 +1,17 @@
+Offline mode
+
+Take a small, source-labelled community snapshot with you.
+
+This prototype provides downloadable snapshots; it is not a fully offline Streamlit application. A production implementation could cache community profiles locally, operate without continuous internet access, and synchronise when connectivity becomes available. The plotted boundary and data points are local, although this prototype does not implement offline caching or synchronisation.
+
+Community profile for export
+
+Download community profile CSV
+
+Download filtered dataset CSV
+
+Download lightweight community report
+
+Selected profile preview
+
+The files above are exports from locally prepared data. They do not implement offline app caching or synchronisation.

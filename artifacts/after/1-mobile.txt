@@ -1,0 +1,43 @@
+REMOTECONNECT NT / 01
+Overview
+
+Which remote NT locations need a closer look at connectivity?
+
+NT coverage list · 2022 / ACCC operator sites · 31 January 2026
+
+188
+Source locations
+of 188 in the 2022 list
+98
+List proximity coverage
+includes multiple source flags
+16
+Flagged for follow-up
+higher experimental band
+
+98 of 188 selected locations list coverage by proximity to a cell. Use the infrastructure comparison to choose what to check locally.
+
+The NT list contains covered locations. It cannot identify every unserved community; a nearby site does not prove service.
+
+● Lower   ● Moderate   ● Higher   ● Unscored  
+
+Equal-size circles: 2022 source locations. Colour: experimental indicator band, not signal strength.
+
+START WITH A LOCATION
+Ngayawilli
+
+Nearest listed NT operator site: 61.8 km.
+
+2022 source flags: Proximity to cell.
+
+Selected by the highest current indicator in this view. This is a question to investigate, not a confirmed coverage gap.
+
+Explore this location
+
+Browse the full connectivity map →
+
+Then check current service. Confirm the provider, device and location with people who use the service, with their permission.
+
+keyboard_arrow_right
+
+Sources, dates and limits

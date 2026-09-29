@@ -1,126 +1,107 @@
 # RemoteConnect NT
 
-**Understanding connectivity gaps across remote Northern Territory communities.**
+A Streamlit tool for deciding **what to check next about remote NT connectivity**. It places the NT Government's 2022 source-location list beside ACCC operator-site observations from 31 January 2026. The experimental indicator helps select questions for follow-up; it does not confirm service gaps or recommend investment.
 
-RemoteConnect NT is an experimental, source-grounded data prototype for exploring NT Government community coverage records alongside ACCC mobile infrastructure. It is decision support for further investigation—not an official ranking, service-quality measure or investment decision.
+## Run locally
 
-## Project structure
-
-```text
-app.py
-pages/                         Six Streamlit dashboard pages
-src/
-  dashboard.py                 Shared UI, filters, maps and chart helpers
-  prepare_data.py              Reproducible raw-to-processed pipeline
-  priority.py                  Explainable, adjustable prototype score
-assets/theme.css               Shared dashboard theme
-tests/test_analysis.py         Haversine and score edge-case tests
-data/
-  raw/                         Downloaded source files and file instructions
-  processed/                   Generated community, site and summary files
-DATA_SOURCES.md                Source, licence, date and field register
-METHODOLOGY.md                 Cleaning, spatial matching and score details
-requirements.txt
-```
-
-## Quick start
-
-### Windows PowerShell
-
-Run from the project root. Use the virtual environment's Python explicitly so
-VS Code or the system Python cannot accidentally launch the app without its
-dependencies. The `py` launcher creates the environment without relying on the
-Microsoft Store `python` alias:
+Tested with **Python 3.12 on Windows**. From the repository root in VS Code's terminal:
 
 ```powershell
 py -3 -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-.venv\Scripts\python.exe src\prepare_data.py
-.venv\Scripts\python.exe -m streamlit run app.py
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\run_app.bat
 ```
 
-If `.venv\Scripts\python.exe` already exists, **skip environment creation**;
-launch from the project root with:
+If the environment already exists, skip its creation. The batch launcher runs data preparation before starting Streamlit. It works with `data/processed/` absent and stops with an error if preparation fails. To prepare without launching:
+
+```powershell
+.\run_app.bat --prepare-only
+```
+
+Direct launch also prepares missing processed files automatically:
 
 ```powershell
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-You can also double-click `run_app.bat` from File Explorer to launch Streamlit
-without relying on the Windows `python` command alias.
-
-Alternatively, activate the environment first:
+After editing raw sources or calculation rules, rebuild explicitly (or relaunch using the batch file):
 
 ```powershell
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python src\prepare_data.py
-python -m streamlit run app.py
+.\.venv\Scripts\python.exe src\prepare_data.py
 ```
 
-If PowerShell blocks activation, use the explicit `.venv\Scripts\python.exe`
-commands above. In VS Code, select `.venv\Scripts\python.exe` using
-**Python: Select Interpreter**.
-
-### macOS / Linux
+macOS/Linux equivalent (not tested in this review):
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python src/prepare_data.py
 python -m streamlit run app.py
 ```
 
-Run the focused calculation/cleaning checks with:
+The included raw files are sufficient to run the app after dependency installation. No API key or live data download is needed. Use the virtual environment's Python explicitly if VS Code selects another interpreter. Missing dependency errors are resolved by installing `requirements.txt` in that same environment. Missing source errors name the required workbook or boundary; see [raw-data instructions](data/raw/README.txt).
 
-```bash
-python -m unittest discover -s tests -v
+## Six views, one investigation
+
+1. **Overview:** three figures, an NT map and a featured location chosen from the current filtered view.
+2. **Connectivity map:** fixed-size 2022 location circles; optional 2026 operator-site crosses. A table provides the same location evidence without requiring map interaction.
+3. **Community explorer:** source flags, provider distances, actual listed site bands, effective score weights and practical verification steps.
+4. **Digital inclusion:** a clear missing-data state and an explanation of why a regional average cannot fill a community profile.
+5. **Data insights:** coverage composition, selected provider-distance dots and baseline/current score sensitivity. Each includes a calculated takeaway.
+6. **Save snapshots:** a readable text snapshot and CSVs for the selected location or filtered set.
+
+Sidebar filters and weights persist during in-app navigation. Explorer and snapshots use the filtered records; an empty selection stays empty. Infrastructure overlays and the labelled full-NT context table are independent of the location filters. Saved CSV/text snapshots can be read later without the app. **The interactive app needs a running Streamlit server**; device caching and synchronisation are not implemented. Maps draw locally without external tiles or topographic downloads.
+
+## Included evidence and findings
+
+The supplied files produce 188 source-location records and 419 NT operator-site records. These reduce to 405 distinct RFNSA/rounded-coordinate keys; that is not a verified physical-tower count.
+
+- 98 locations have a positive proximity-to-cell flag; 96 of these are proximity-only.
+- Seven locations have multiple YES flags. Profiles and exports preserve every original flag.
+- No ADII or ABS observations are supplied. Their CSVs are blank templates, not evidence.
+- ACCC TPG distances use its own listed sites. The separately published Optus–TPG shared-network file is excluded, so provider proximity does not measure retail choice.
+
+The NT source lists **covered locations**, including communities, villages, tourism and highway sites. It is not a complete inventory of remote communities or unserved places. Nearby sites and listed bands do not prove local signal, reliability, capacity or affordability. The 2022 and 2026 files measure different things and must not be turned into a time series.
+
+## Explainable indicator
+
+Configured defaults are 40 coverage / 25 distance / 15 provider diversity / 20 context. With no context observations, actual default shares are **50%, 31.25%, 18.75%, 0%**. The context slider is disabled; missing components are omitted and the remaining positive weights are renormalised per record. Setting every usable weight to zero leaves records unscored.
+
+For multiple coverage flags, the score explicitly uses the least limiting listed type (macro, then small, then proximity). This is a design assumption, not a measured quality judgement. The Insights sensitivity chart compares default and current weights on the same selected records. Read [METHODOLOGY.md](METHODOLOGY.md) for formulas, thresholds, exact deduplication and geography safeguards.
+
+## Verification
+
+```powershell
+.\.venv\Scripts\python.exe src\prepare_data.py
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe scripts\check_first_launch.py
 ```
 
-## Included source data
+Optional browser checks require installed Chrome and the development dependencies:
 
-The workspace includes:
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+# Keep the app running at http://127.0.0.1:8501 in another terminal.
+.\.venv\Scripts\python.exe scripts\browser_review.py --phase after
+.\.venv\Scripts\python.exe scripts\browser_interactions.py
+```
 
-- NT Government **Mobile Phone Coverage in Remote Areas of the NT 2022** workbook.
-- ACCC **2026 Mobile Sites** CSV releases for Telstra, Optus and TPG.
-- A Northern Territory admin-1 polygon extracted from Natural Earth for spatially filtering national operator records to NT.
+The first browser script captures all six pages at 1440×1000 and 390×844, including lower-page screenshots. The second checks real navigation, filters, score controls, map overlay, selection, downloads and mobile controls. The Windows first-launch script temporarily backs up only generated files under `.tmp/` and checks both batch and direct launch rebuilding. Screenshots and machine-readable results are in `artifacts/`. Browser checks are separate from Streamlit AppTest; a passing AppTest is not a visual review. [CHECKPOINT.md](CHECKPOINT.md) records the latest verification and any unfinished work.
 
-The three processed outputs are generated by `python src/prepare_data.py`. The community source contains covered remote locations; it is not a complete inventory of uncovered communities. Digital-inclusion and ABS 2021 Census extracts are not supplied. Instructions and blank templates are in [data/raw/README.txt](data/raw/README.txt), and source metadata is in [DATA_SOURCES.md](DATA_SOURCES.md).
+## Files
 
-## Dashboard pages
+| Path | Purpose |
+|---|---|
+| `app.py`, `.streamlit/config.toml` | Navigation, persistent controls, theme configuration |
+| `pages/` | Six views |
+| `assets/` | CSS and favicon |
+| `src/dashboard.py` | Shared UI, filters, charts and local map |
+| `src/prepare_data.py`, `src/priority.py` | Preparation, distances and explainable scoring |
+| `src/exports.py` | Source-labelled CSV/text snapshot generation |
+| `data/raw/` | Publisher files, optional empty templates and instructions |
+| `data/processed/` | Generated files, excluded from Git |
+| `tests/`, `scripts/` | Calculation, AppTest and real browser checks |
+| `DATA_SOURCES.md`, `data_sources.csv` | Publisher links, licences, observation/access dates |
 
-1. **Overview** — source-data KPIs, interactive community map and ethics notes.
-2. **Connectivity map** — provider, coverage-type, priority, 4G/5G and remoteness filters; optional ACCC site markers.
-3. **Community explorer** — one source location, infrastructure distances, nearby sites, band presence and score explanation.
-4. **Digital inclusion** — shows supplied ADII values only at their documented geography; no aggregate downscaling.
-5. **Data insights** — coverage, infrastructure, LTE/NR band, distance, diversity and priority charts.
-6. **Offline mode** — profile CSV, filtered CSV and lightweight text report downloads.
-
-The interactive map draws its NT boundary and data points from local files and does not require external map tiles. Downloadable CSV/report snapshots are available, but local caching and synchronization are not implemented and the Streamlit app is not represented as a production offline-first client.
-
-## Connectivity Priority Indicator
-
-The experimental indicator starts with 40% coverage-type proxy, 25% distance to infrastructure, 15% nearby provider diversity and 20% matched ADII/remoteness context. Weights can be changed in the sidebar. For each location, unavailable inputs are omitted and the remaining weights are rescaled. The UI shows the measured component values and effective weight for every score. Band-presence and proximity are not guarantees of service.
-
-## Reproducibility and limitations
-
-See [METHODOLOGY.md](METHODOLOGY.md) for data cleaning, spatial filtering, Haversine distances, score scaling and limitations. See [DATA_SOURCES.md](DATA_SOURCES.md) for URLs, licence metadata, years and fields.
-
-## Suggested project-report screenshots
-
-- Overview KPIs and community map with priority legend.
-- Connectivity map with nearby ACCC operator markers enabled.
-- Community explorer showing provider-distance chart and “Why this community received this score”.
-- Digital-inclusion page demonstrating its source-geography warning and missing-data state.
-- Data-insights chart panel and offline report download controls.
-
-## Suggested 10-minute demonstration
-
-1. **0:00–1:00 — Challenge:** Introduce remote connectivity and the limits of infrastructure-only measures.
-2. **1:00–2:00 — Data:** Show the 2022 NT coverage workbook and ACCC 2026 operator-site releases and their dates.
-3. **2:00–4:00 — Method:** Explain boundary filtering, Haversine distance, 50 km provider metrics and adjustable score components.
-4. **4:00–7:00 — Dashboard:** Filter and map locations, open one profile, compare providers, and explain the score.
-5. **7:00–8:00 — Inclusion and ethics:** Show why ADII geography is preserved and missing values remain visible.
-6. **8:00–9:00 — Offline concept:** Download a profile CSV and lightweight report; clarify basemap/app connectivity requirements.
-7. **9:00–10:00 — Next steps:** Propose ADII/ABS source extracts, community consultation and validation before any decisions.
+Raw files were accessed on 28 September 2026; publisher metadata was checked on 29 September. See [DATA_SOURCES.md](DATA_SOURCES.md) for links and verification limits. The project addresses the [CDU challenge's remote-connectivity theme](https://itcodefair.cdu.edu.au/data-innovation-challenge/). No community consultation or current field measurements are claimed.

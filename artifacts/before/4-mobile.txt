@@ -1,0 +1,19 @@
+Digital inclusion
+
+Connectivity is one part of inclusion—not a proxy for affordability, access or ability.
+
+The Australian Digital Inclusion Index (ADII) describes Access, Affordability and Digital Ability. Use each statistic only at the geography published by the source. An NT-wide, regional or other aggregate value must not be copied onto a community profile or interpreted as an individual's ability.
+
+No ADII statistics have been supplied with this workspace. The dashboard does not estimate or fabricate values. Add sourced rows to data/raw/digital_inclusion_optional.csv and preserve the source geography and citation.
+
+data/raw/ADII_FILE_INSTRUCTION.txt
+
+ABS 2021 NT Indigenous Location (ILOC) population data are also not supplied; see data/raw/ABS_2021_ILOC_FILE_INSTRUCTION.txt.
+
+Geography and interpretation
+Community-level: only a source record explicitly published at that community geography may be linked to a community profile.
+Regional: retain the named region and show it separately; do not distribute the value across communities within it.
+NT-level: describe it as an NT-level statistic.
+National: describe it as a national statistic.
+
+Source: Australian Digital Inclusion Index — First Nations, remote communities. The dashboard states CC BY-NC-SA 4.0 terms for its report/data and requests the 2025 ADII citation; verify the current source terms and citation when exporting data.

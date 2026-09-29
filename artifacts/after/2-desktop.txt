@@ -1,0 +1,24 @@
+REMOTECONNECT NT / 02
+Connectivity map
+
+Compare the 2022 source locations with the 2026 operator-site records.
+
+188 filtered source locations · equal-size circles · colour shows the experimental priority band.
+
+Overlay ACCC operator sites
+
+● Lower   ● Moderate   ● Higher   ● Unscored  
+
+Marker size is fixed. Neither layer is a coverage footprint. Drag to pan; double-click to reset. Boundary: Natural Earth.
+
+Open a location from this view
+
+Inspect Adelaide River →
+
+keyboard_arrow_right
+
+Read the map as a table
+
+keyboard_arrow_right
+
+Sources, dates and limits

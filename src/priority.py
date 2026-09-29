@@ -35,8 +35,13 @@ def apply_priority_weights(frame: pd.DataFrame, weights: dict[str, float]) -> pd
         out=np.zeros_like(effective_weights, dtype=float),
         where=denominator[:, None] > 0,
     )
+    for column, name in enumerate(names):
+        result[f"{COMPONENT_COLUMNS[name]}_weight_pct"] = proportions[:, column] * 100
+        result[f"{COMPONENT_COLUMNS[name]}_contribution"] = np.where(
+            present[:, column], matrix[:, column], 0
+        ) * proportions[:, column]
     result["priority_score"] = np.divide(
-        np.nansum(matrix * proportions, axis=1),
+        np.sum(np.where(present, matrix, 0) * proportions, axis=1),
         np.ones(len(result)),
         out=np.full(len(result), np.nan),
         where=denominator > 0,
@@ -50,7 +55,7 @@ def apply_priority_weights(frame: pd.DataFrame, weights: dict[str, float]) -> pd
     def explain(row_number: int) -> str:
         parts = [
             f"{name}: {matrix[row_number, column]:.0f}/100 "
-            f"({proportions[row_number, column] * 100:.0f}% of available weight)"
+            f"({proportions[row_number, column] * 100:.2f}% of available weight)"
             for column, name in enumerate(names)
             if present[row_number, column] and proportions[row_number, column] > 0
         ]

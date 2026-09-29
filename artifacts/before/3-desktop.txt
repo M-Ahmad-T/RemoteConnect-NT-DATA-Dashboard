@@ -1,0 +1,114 @@
+Community explorer
+
+Review source coverage, nearby mobile sites, and the inputs behind one location's score.
+
+Select a community or source location
+
+ADELAIDE RIVER
+
+Source location: -13.23780, 131.10473 · VILLAGE
+
+Population in NT coverage source
+
+317
+
+ABS ILOC population (2021)
+
+Not supplied
+
+Coverage type
+
+Macro cell
+
+Priority indicator
+
+16.5/100
+
+Lower
+
+Unique sites within 50 km
+
+15
+
+Nearest operator infrastructure
+
+Nearest All operators
+
+0.9 km
+
+Nearest Telstra
+
+0.9 km
+
+Nearest Optus
+
+0.9 km
+
+Nearest TPG
+
+69.6 km
+
+4G band at a site within 50 km
+
+Available
+
+5G band at a site within 50 km
+
+Available
+
+Band presence at nearby ACCC-listed sites is not a coverage or service-quality guarantee.
+
+Distance to provider infrastructure
+Telstra
+Optus
+TPG
+0
+10
+20
+30
+40
+50
+60
+70
+Provider
+Telstra
+Optus
+TPG
+Provider
+Nearest site distance (km)
+Nearby sites by provider
+Telstra
+Optus
+TPG
+0
+1
+2
+3
+4
+5
+6
+7
+8
+Provider
+Operator-site records within 50 km
+Priority indicator components
+0
+20
+40
+60
+80
+Coverage type proxy
+Nearest site distance
+Provider diversity
+Score (0-100)
+Component
+
+Why this community received this score
+
+Included: coverage limitation: 20/100 (50.00% of available weight); distance to infrastructure: 1/100 (31.25% of available weight); provider diversity: 33/100 (18.75% of available weight). Not included: digital inclusion / remoteness context.
+
+This is an experimental, adjustable decision-support indicator. Available components are rescaled to 100%; missing components do not receive an invented value.
+
+Digital inclusion context
+
+No exact community-level ADII record is currently supplied. See the Digital inclusion page for source-geography guidance.

@@ -10,4 +10,11 @@ if not exist ".venv\Scripts\python.exe" (
     exit /b 1
 )
 
-".venv\Scripts\python.exe" -m streamlit run app.py
+rem Rebuild derived files on every launch so raw inputs and calculations stay aligned.
+".venv\Scripts\python.exe" src\prepare_data.py
+if errorlevel 1 (
+    echo Data preparation failed. Check the source paths above and DATA_SOURCES.md.
+    exit /b 1
+)
+if /i "%~1"=="--prepare-only" exit /b 0
+".venv\Scripts\python.exe" -m streamlit run app.py --server.headless true

@@ -1,0 +1,30 @@
+REMOTECONNECT NT / 06
+Save snapshots
+
+Keep a small evidence file for a low-connectivity visit or a later conversation.
+
+Saved CSV and text files open without the dashboard. The interactive app still needs a running Streamlit server; it does not cache or synchronise on your device.
+
+Location to save
+
+One location, with its evidence
+
+Adelaide River · source flags, provider distances, listed bands, score weights and the next checks.
+
+Save readable location snapshot
+
+Save location CSV
+
+Your filtered set · 188 records
+
+Includes the current indicator and effective weights for each record. Source URLs, dates and limitations travel with the data.
+
+Save filtered CSV
+
+keyboard_arrow_right
+
+Preview the readable snapshot
+
+keyboard_arrow_right
+
+Sources, dates and limits

@@ -1,0 +1,98 @@
+[
+  {
+    "page": "Overview",
+    "viewport": "desktop",
+    "heading": "Overview",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Connectivity map",
+    "viewport": "desktop",
+    "heading": "Connectivity map",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Community explorer",
+    "viewport": "desktop",
+    "heading": "Community explorer",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Digital inclusion",
+    "viewport": "desktop",
+    "heading": "Digital inclusion",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Data insights",
+    "viewport": "desktop",
+    "heading": "Data insights",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Save snapshots",
+    "viewport": "desktop",
+    "heading": "Save snapshots",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Overview",
+    "viewport": "mobile",
+    "heading": "Overview",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Connectivity map",
+    "viewport": "mobile",
+    "heading": "Connectivity map",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Community explorer",
+    "viewport": "mobile",
+    "heading": "Community explorer",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Digital inclusion",
+    "viewport": "mobile",
+    "heading": "Digital inclusion",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Data insights",
+    "viewport": "mobile",
+    "heading": "Data insights",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  },
+  {
+    "page": "Save snapshots",
+    "viewport": "mobile",
+    "heading": "Save snapshots",
+    "exceptions": [],
+    "browser_errors": [],
+    "overflow": false
+  }
+]

@@ -1,0 +1,38 @@
+REMOTECONNECT NT / 04
+Digital inclusion
+
+A nearby mobile site cannot tell us whether people can afford or use a service.
+
+What this dataset cannot answer
+
+Access
+
+Are suitable devices and reliable connections within reach?
+
+Affordability
+
+Can people meet their needs without giving up other essentials?
+
+Digital ability
+
+Do people have the skills and support to do what matters to them online?
+
+No matched digital inclusion observations.
+The ADII file contains no observations in this version. The indicator uses coverage, distance and provider records only; its context control is disabled.
+Why we leave a gap here
+
+An average for a region describes the people surveyed in that region. It is not a result for every location inside it. We need an observation published for the same community, with its year and citation, before attaching it to a profile.
+
+Open the ADII remote communities dashboard
+
+The source offers 2022 and 2024 observations and requests the 2025 ADII report citation. No numerical ADII results are reproduced here.
+
+keyboard_arrow_right
+
+ADII attribution
+
+Explore what the available records do show →
+
+keyboard_arrow_right
+
+Sources, dates and limits
